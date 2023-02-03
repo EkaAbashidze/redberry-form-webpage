@@ -13,7 +13,7 @@ export default function Home() {
         src={bgLogo}
         alt=""
       />
-      <Link to="/" className="bg-offblack w-[464px] h-[60px] rounded-lg absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] active:scale-[0.98]">
+      <Link to="/personal" className="bg-offblack w-[464px] h-[60px] rounded-lg absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] active:scale-[0.98]">
         <h3 className="h-full flex flex-col text-center justify-center text-white text-xl font-medium leading-[24px]">
           ᲠᲔᲖᲘᲣᲛᲔᲡ ᲓᲐᲛᲐᲢᲔᲑᲐ
         </h3>
