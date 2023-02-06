@@ -7,7 +7,6 @@ export default function Experience() {
   return (
     <div className="flex">
       <div className="w-[57%] h-screen bg-lightgray px-[150px] pt-12 pb-16">
-        <Header heading="ᲒᲐᲛᲝᲪᲓᲘᲚᲔᲑᲐ" page={2} prevPage="/Personal" />
         <form action=""></form>
       </div>
 

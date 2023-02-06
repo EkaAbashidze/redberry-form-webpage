@@ -6,9 +6,10 @@ import { useNavigate } from "react-router-dom";
 import Personal from "./Personal";
 import Experience from "./Experience";
 import Education from "./Education";
+import Buttons from "./Buttons";
 
 export default function Form() {
-  const { steps, currentStepIndex, step, back, next} =
+  const { steps, currentStepIndex, step, back, next, isFirstStep, isLastStep} =
     useMultistepForm([
       <Personal />,
       <Experience/>,
@@ -39,6 +40,12 @@ export default function Form() {
           />
         </div>
         {step}
+        <Buttons
+          isFirstStep={isFirstStep}
+          isLastStep={isLastStep}
+          back={back}
+          next={next}
+        />
       </form>
     </div>
   );
