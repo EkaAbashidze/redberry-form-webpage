@@ -6,6 +6,8 @@ import Buttons from "./Buttons";
 import PersonalForm from "./PersonalForm";
 import ExperienceForm from "./ExperienceForm";
 import EducationForm from "./EducationForm";
+import FormWrapper from "./FormWrapper";
+import Preview from "./Preview";
 
 export interface Experiences {
   id: string;
@@ -64,6 +66,10 @@ const USER_DATA: FormData = {
 };
 
 export default function Form() {
+
+  const [data, setData] = useState(USER_DATA);
+
+  
   const { steps, currentStepIndex, step, back, next, isFirstStep, isLastStep } =
     useMultistepForm([<PersonalForm />, <ExperienceForm />, <EducationForm />]);
 
@@ -79,25 +85,31 @@ export default function Form() {
   return (
     <div className="flex">
       <form onSubmit={onSubmit}>
-        <div
-          className="absolute pl-[150px] pt-[47px] flex justify-between
+        <FormWrapper>
+          <div
+            className="absolute pl-[150px] pt-[47px] flex justify-between
         "
-        >
-          <Header
-            heading="ᲘᲜᲤᲝ"
-            page={currentStepIndex + 1}
-            prevPage="/"
-            totalSteps={steps.length}
-          />
-        </div>
-        {step}
-        <Buttons
-          isFirstStep={isFirstStep}
-          isLastStep={isLastStep}
-          back={back}
-          next={next}
-        />
+          >
+            <Header
+              heading="ᲘᲜᲤᲝ"
+              page={currentStepIndex + 1}
+              prevPage="/"
+              totalSteps={steps.length}
+            />
+          </div>
+          {step}
+
+          <div className="pt-[115px]">
+            <Buttons
+              isFirstStep={isFirstStep}
+              isLastStep={isLastStep}
+              back={back}
+              next={next}
+            />
+          </div>
+        </FormWrapper>
       </form>
+      <Preview data={data} />
     </div>
   );
 }
