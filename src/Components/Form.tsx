@@ -2,11 +2,10 @@ import React, { FormEvent, useState } from "react";
 import Header from "./Header";
 import useMultistepForm from "./useMultistepForm";
 import { useNavigate } from "react-router-dom";
-
-import Personal from "./Personal";
-import Experience from "./Experience";
-import Education from "./Education";
 import Buttons from "./Buttons";
+import PersonalForm from "./PersonalForm";
+import ExperienceForm from "./ExperienceForm";
+import EducationForm from "./EducationForm";
 
 export interface Experiences {
   id: string;
@@ -64,11 +63,9 @@ const USER_DATA: FormData = {
   about_me: "",
 };
 
-
-
 export default function Form() {
   const { steps, currentStepIndex, step, back, next, isFirstStep, isLastStep } =
-    useMultistepForm([<Personal />, <Experience />, <Education />]);
+    useMultistepForm([<PersonalForm />, <ExperienceForm />, <EducationForm />]);
 
   const currentStep = (currentStepIndex + 1) / steps.length;
 

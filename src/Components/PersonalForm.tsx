@@ -4,7 +4,7 @@ import Warning from "./Svg/Warning";
 import WarningName from "./Svg/WarningName";
 
 
-export default function Personal() {
+export default function PersonalForm() {
   return (
     <div>
       <div className="flex gap-x-14">
