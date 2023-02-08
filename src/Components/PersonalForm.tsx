@@ -32,6 +32,26 @@ export default function UserFormExample({
   const [isNumberValidated, setIsNumberValidated] = useState(false);
   const [isEmailValidated, setIsEmailValidated] = useState(false);
 
+  // const checkNumber = (e: any) => {
+  //   const inputValue = e.target.value;
+  //   const formattedValue = formatPhoneNumber(inputValue);
+  //   updateInputs({ phone_number: formattedValue });
+  // };
+
+  // const formatPhoneNumber = (inputValue: string) => {
+  //   const cleaned = inputValue.replace(/\D/g, "");
+  //   const match = cleaned.match(/^(\d{3})(\d{2})(\d{2})(\d{2})$/);
+  //   if (match) {
+  //     return `+995 ${match[1]} ${match[2]} ${match[3]} ${match[4]}`;
+  //   }
+  //   return inputValue;
+  // };
+  // THESE SHOULD BE ADDED LATER
+
+
+  
+
+
   return (
     <div>
       <div className="flex gap-x-14">

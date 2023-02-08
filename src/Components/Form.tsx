@@ -76,7 +76,11 @@ export default function Form() {
       });
     }
 
-
+      const updateExperiences = (Arr: Experiences[]) => {
+        setData((prevData) => {
+          return { ...prevData, experiences: Arr };
+        });
+      };
 
 
 
@@ -84,7 +88,7 @@ export default function Form() {
 
   const { steps, currentStepIndex, step, back, next, isFirstStep, isLastStep } =
     useMultistepForm([<PersonalForm {...data} updateInputs={updateInputs} />,
-      <ExperienceForm />,
+      <ExperienceForm {...data} updateInputs={updateExperiences} />,
       <EducationForm />]);
 
   const currentStep = (currentStepIndex + 1) / steps.length;
