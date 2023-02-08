@@ -1,10 +1,37 @@
-import React from "react";
+import React, { useState } from "react";
 import Check from "./Svg/Check";
 import Warning from "./Svg/Warning";
 import WarningName from "./Svg/WarningName";
+import { FormData } from "./Form";
 
+type userFormProps = FormData & {
+  updateInputs: (inputs: Partial<FormData>) => void;
+};
 
-export default function PersonalForm() {
+export default function UserFormExample({
+  name,
+  surname,
+  about_me,
+  image,
+  email,
+  phone_number,
+  updateInputs,
+}: userFormProps) {
+  const patternName = /^[ა-ჰ]{2,}$/;
+  const nameIsValid = patternName.test(name);
+  const surnameIsValid = patternName.test(surname);
+  const descriptionIsValid = patternName.test(about_me);
+  const patternEmail = /^[A-Za-z0-9._%+-]+@redberry.ge$/;
+  const emailIsValid = patternEmail.test(email);
+  const patternNumber = /^\+995\s\d{3}\s\d{2}\s\d{2}\s\d{2}$/;
+  const numberIsValid = patternNumber.test(phone_number || "");
+
+  const [inputBlurred, setInputBlurred] = useState(false);
+  const [surnameInputBlurred, setSurnameInputBlurred] = useState(false);
+  const [descriptionInputBlurred, setDescriptionInputBlurred] = useState(false);
+  const [isNumberValidated, setIsNumberValidated] = useState(false);
+  const [isEmailValidated, setIsEmailValidated] = useState(false);
+
   return (
     <div>
       <div className="flex gap-x-14">
@@ -21,9 +48,22 @@ export default function PersonalForm() {
               required
               type="text"
               name="name"
-              value="სახელი"
+              value={name}
               pattern="^[ა-ჰ]{2,}$"
+              onChange={(e) => updateInputs({ name: e.target.value })}
+              onBlur={() => setInputBlurred(true)}
+              className={`min-w-[371px] h-12 border border-gray rounded py-[13px] px-4 leading-[21px] opacity-60 focus:outline-none relative z-0 ${
+                inputBlurred && name && nameIsValid
+                  ? "border-green"
+                  : inputBlurred && name && "border-lightred"
+              }`}
             />
+
+            {inputBlurred && name && nameIsValid ? (
+              <Check />
+            ) : (
+              inputBlurred && name && <WarningName />
+            )}
           </div>
 
           <p className="font-light text-sm leading-[21px] text-textgray">
@@ -43,9 +83,21 @@ export default function PersonalForm() {
               required
               type="text"
               name="surname"
-              value="გვარი"
+              value={surname}
               pattern="^[ა-ჰ]{2,}$"
+              onChange={(e) => updateInputs({ surname: e.target.value })}
+              onBlur={() => setSurnameInputBlurred(true)}
+              className={`min-w-[371px] h-12 border border-gray rounded py-13px px-4 leading-21px opacity-60 focus:outline-none relative z-0 ${
+                surnameInputBlurred && surname && surnameIsValid
+                  ? "border-green"
+                  : surnameInputBlurred && surname && "border-lightred"
+              }`}
             />
+            {surnameInputBlurred && surname && surnameIsValid ? (
+              <Check />
+            ) : (
+              surnameInputBlurred && surname && <Warning />
+            )}
           </div>
 
           <p className="font-light text-sm leading-[21px] text-textgray">
@@ -63,7 +115,11 @@ export default function PersonalForm() {
           <input
             required
             type="file"
-            className="h-[27px]"
+            onChange={(e) => {
+              updateInputs({ image: e.target?.files?.[0] || null });
+            }}
+            onLoad={() => {}}
+            className="h-[27px] focus:outline-none"
           />
         </label>
       </div>
@@ -73,7 +129,14 @@ export default function PersonalForm() {
         <textarea
           name="about_me"
           placeholder="ზოგადი ინფო შენ შესახებ"
-          value="ჩემ შესახებ"
+          value={about_me}
+          onChange={(e) => updateInputs({ about_me: e.target.value })}
+          onBlur={() => setDescriptionInputBlurred(true)}
+          className={`w-798 h-103 border border-gray rounded py-[13px] px-4 leading-21px opacity-60 resize-none focus:outline-none ${
+            descriptionInputBlurred && about_me && descriptionIsValid
+              ? "border-green"
+              : ""
+          }`}
         ></textarea>
       </div>
 
@@ -88,9 +151,27 @@ export default function PersonalForm() {
             type="email"
             name="email"
             placeholder="anzorr666@redberry.ge"
-            value="იმეილი"
+            value={email}
+            onBlur={() => {
+              setIsEmailValidated(true);
+            }}
+            onChange={(e) => updateInputs({ email: e.target.value })}
             pattern="^[A-Za-z0-9._%+-]+@redberry.ge$"
+            className={`w-798 h-12 border border-gray rounded py-[13px] px-4 leading-21px opacity-60 focus:outline-none ${
+              isEmailValidated && email
+                ? emailIsValid
+                  ? "border-green"
+                  : "border-lightred"
+                : ""
+            }`}
           />
+          {isEmailValidated && email ? (
+            emailIsValid ? (
+              <Check />
+            ) : (
+              <Warning />
+            )
+          ) : null}
         </div>
 
         <p className="font-light text-sm leading-[21px] text-textgray">
@@ -111,10 +192,21 @@ export default function PersonalForm() {
             required
             type="text"
             name="phone_number"
-            value="ნომერი"
+            value={phone_number || ""}
+            onBlur={() => setIsNumberValidated(true)}
             placeholder="+995 551 12 34 56"
             pattern="^\+\d{3}\s\d{3}\s\d{2}\s\d{2}\s\d{2}$"
+            className={`w-798 h-12 border border-gray rounded py-13px px-4 leading-21px opacity-60 focus:outline-none ${
+              isNumberValidated && phone_number && numberIsValid
+                ? "border-green"
+                : isNumberValidated && phone_number && "border-lightred"
+            }`}
           />
+          {isNumberValidated && phone_number && numberIsValid ? (
+            <Check />
+          ) : (
+            isNumberValidated && phone_number && <Warning />
+          )}
         </div>
 
         <p className="font-light text-sm leading-[21px] text-textgray">

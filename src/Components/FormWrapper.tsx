@@ -5,7 +5,7 @@ type FormWrapperProps = {
   children: ReactNode;
 };
 
-export default function FormWrapper({children}: FormWrapperProps) {
+export default function FormWrapper({ children }: FormWrapperProps) {
   return (
     <div className="h-[1080px] bg-lightgray px-[150px] pt-[47px] pb-16 overflow-y-scroll">
       <div>{children}</div>

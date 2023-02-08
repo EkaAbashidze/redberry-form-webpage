@@ -70,8 +70,22 @@ export default function Form() {
   const [data, setData] = useState(USER_DATA);
 
   
+    function updateInputs(inputs: Partial<FormData>) {
+      setData((prevData) => {
+        return { ...prevData, ...inputs };
+      });
+    }
+
+
+
+
+
+
+
   const { steps, currentStepIndex, step, back, next, isFirstStep, isLastStep } =
-    useMultistepForm([<PersonalForm />, <ExperienceForm />, <EducationForm />]);
+    useMultistepForm([<PersonalForm {...data} updateInputs={updateInputs} />,
+      <ExperienceForm />,
+      <EducationForm />]);
 
   const currentStep = (currentStepIndex + 1) / steps.length;
 
@@ -87,12 +101,12 @@ export default function Form() {
       <form onSubmit={onSubmit}>
         <FormWrapper>
           <div
-            className="absolute pl-[150px] pt-[47px] flex justify-between
+            className="flex justify-between
         "
           >
             <Header
-              heading="ᲘᲜᲤᲝ"
               page={currentStepIndex + 1}
+              heading="ᲞᲘᲠᲐᲓᲘ ᲘᲜᲤᲝ"
               prevPage="/"
               totalSteps={steps.length}
             />

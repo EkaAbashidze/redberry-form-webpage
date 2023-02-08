@@ -13,3 +13,30 @@
 body {
   margin: 0;
 }
+
+input[type='file'] {
+  color: rgba(0, 0, 0, 0)
+}
+
+input[type="file"]::-webkit-file-upload-button {
+  visibility: hidden;
+}
+
+input[type="file"]:before {
+  content: "ატვირთვა";
+  font-family: "Helvetica Neue";
+  background-color: #0E80BF;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 107px;
+  height: 27px;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 17px;
+  color: #ffffff;
+  white-space: nowrap;
+    -webkit-user-select: none;
+    cursor: pointer;
+}
