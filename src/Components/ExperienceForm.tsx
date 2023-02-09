@@ -27,6 +27,19 @@ export default function ExperienceFormExample({
 
   const [allExperiences, setAllExperiences] = useState(experiences);
 
+  const addExperience = () => {
+    setAllExperiences((prevAllExperiences) => [
+      ...prevAllExperiences,
+      {
+        position: "",
+        employer: "",
+        start_date: "",
+        due_date: "",
+        description: "",
+      },
+    ]);
+    console.log("Hello");
+  };
 
   return (
     <div>
@@ -205,6 +218,7 @@ export default function ExperienceFormExample({
       ))}
       <button
         type="button"
+        onClick={() => addExperience()}
         className="cursor-pointer bg-lightgrayblue text-white w-289 h-48 rounded flex justify-center items-center text-base leading-[20px]"
       >
         მეტი გამოცდილების დამატება

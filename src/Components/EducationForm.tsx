@@ -28,6 +28,18 @@ export default function EducationFormExample({
 
   const [allEducations, setAllEducations] = useState(educations);
 
+  const addEducations = () => {
+    setAllEducations((prevAllEducations) => [
+      ...prevAllEducations,
+      {
+        institute: "",
+        degree: "",
+        due_date: "",
+        description: "",
+      },
+    ]);
+  };
+
   return (
     <div>
       {allEducations.map((educations, idx) => (
@@ -181,6 +193,7 @@ export default function EducationFormExample({
       ))}
       <button
         type="button"
+        onClick={() => addEducations()}
         className="cursor-pointer bg-lightgrayblue text-white w-289 h-48 rounded flex justify-center items-center text-base leading-[20px]"
       >
         სხვა სასწავლებლის დამატება

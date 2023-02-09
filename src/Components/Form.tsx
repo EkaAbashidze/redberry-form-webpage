@@ -10,7 +10,6 @@ import FormWrapper from "./FormWrapper";
 import Preview from "./Preview";
 
 export interface Experiences {
-  id: string;
   position: string;
   employer: string;
   start_date: string;
@@ -19,7 +18,6 @@ export interface Experiences {
 }
 
 export interface Educations {
-  id: string;
   institute: string;
   degree: string;
   due_date: string;
@@ -44,7 +42,6 @@ const USER_DATA: FormData = {
   phone_number: null,
   experiences: [
     {
-      id: "",
       position: "",
       employer: "",
       start_date: "",
@@ -54,7 +51,6 @@ const USER_DATA: FormData = {
   ],
   educations: [
     {
-      id: "",
       institute: "",
       degree: "",
       due_date: "",
