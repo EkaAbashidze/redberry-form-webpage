@@ -66,42 +66,41 @@ const USER_DATA: FormData = {
 };
 
 export default function Form() {
-
   const [data, setData] = useState(USER_DATA);
 
-  
-    function updateInputs(inputs: Partial<FormData>) {
-      setData((prevData) => {
-        return { ...prevData, ...inputs };
-      });
-    }
+  function updateInputs(inputs: Partial<FormData>) {
+    setData((prevData) => {
+      return { ...prevData, ...inputs };
+    });
+  }
 
-      const updateExperiences = (Arr: Experiences[]) => {
-        setData((prevData) => {
-          return { ...prevData, experiences: Arr };
-        });
-      };
+  const updateExperiences = (Arr: Experiences[]) => {
+    setData((prevData) => {
+      return { ...prevData, experiences: Arr };
+    });
+  };
 
-      const updateEducations = (Arr: Educations[]) => {
-        setData((prevData) => {
-          return { ...prevData, educations: Arr };
-        });
-      };
-
-
+  const updateEducations = (Arr: Educations[]) => {
+    setData((prevData) => {
+      return { ...prevData, educations: Arr };
+    });
+  };
 
   const { steps, currentStepIndex, step, back, next, isFirstStep, isLastStep } =
-    useMultistepForm([<PersonalForm {...data} updateInputs={updateInputs} />,
+    useMultistepForm([
+      <PersonalForm {...data} updateInputs={updateInputs} />,
       <ExperienceForm {...data} updateInputs={updateExperiences} />,
-      <EducationForm  {...data} updateInputs={updateEducations} />]);
-
-  const currentStep = (currentStepIndex + 1) / steps.length;
+      <EducationForm {...data} updateInputs={updateEducations} />,
+    ]);
 
   const Navigate = useNavigate();
 
   function onSubmit(e: FormEvent) {
     e.preventDefault();
-    return next();
+    if (!isLastStep) {
+      return next();
+    }
+    Navigate("/lastpage", { state: { data: data } });
   }
 
   return (
