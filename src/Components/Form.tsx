@@ -1,4 +1,4 @@
-import React, { FormEvent, useState } from "react";
+import React, { FormEvent, useEffect, useState } from "react";
 import Header from "./Header";
 import useMultistepForm from "./useMultistepForm";
 import { useNavigate } from "react-router-dom";
@@ -87,21 +87,53 @@ export default function Form() {
     setData(USER_DATA);
   };
 
+  const storedData = JSON.parse(sessionStorage.getItem("data")!);
+
+  useEffect(() => {
+    if (storedData) {
+      setData(storedData);
+    }
+  }, []);
+
+  function readFile(
+    e: React.ChangeEvent<HTMLInputElement>,
+    callback: (result: string) => void
+  ) {
+    const file = e.target?.files?.[0] || null;
+    const reader = new FileReader();
+    reader.onload = () => {
+      if (typeof reader.result === "string") {
+        callback(reader.result);
+        const updatedData = {
+          ...storedData,
+          image: reader.result,
+        };
+        setData(updatedData);
+        sessionStorage.setItem("data", JSON.stringify(updatedData));
+      }
+    };
+    if (file) {
+      reader.readAsDataURL(file);
+    }
+  }
+
+
+
   const { steps, currentStepIndex, step, back, next, isFirstStep, isLastStep } =
     useMultistepForm([
-      <PersonalForm {...data} updateInputs={updateInputs} />,
+      <PersonalForm {...data} updateInputs={updateInputs} readFile={readFile} />,
       <ExperienceForm {...data} updateInputs={updateExperiences} />,
       <EducationForm {...data} updateInputs={updateEducations} />,
     ]);
 
-  const Navigate = useNavigate();
+  const navigate = useNavigate();
 
   function onSubmit(e: FormEvent) {
     e.preventDefault();
     if (!isLastStep) {
       return next();
     }
-    Navigate("/lastpage", { state: { data: data } });
+    navigate("/lastpage", { state: { data: data } });
   }
 
   return (

@@ -6,6 +6,10 @@ import { FormData } from "./Form";
 
 type userFormProps = FormData & {
   updateInputs: (inputs: Partial<FormData>) => void;
+  readFile: (
+    e: React.ChangeEvent<HTMLInputElement>,
+    callback: (result: string) => void
+  ) => void;
 };
 
 export default function UserFormExample({
@@ -16,6 +20,7 @@ export default function UserFormExample({
   email,
   phone_number,
   updateInputs,
+  readFile
 }: userFormProps) {
   const patternName = /^[ა-ჰ]{2,}$/;
   const nameIsValid = patternName.test(name);
@@ -136,8 +141,10 @@ export default function UserFormExample({
             type="file"
             onChange={(e) => {
               updateInputs({ image: e.target?.files?.[0] || null });
+              readFile(e, (result) => {
+                console.log(result)
+              });
             }}
-            onLoad={() => {}}
             className="h-[27px] focus:outline-none"
           />
         </label>
