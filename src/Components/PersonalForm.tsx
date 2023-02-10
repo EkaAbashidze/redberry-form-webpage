@@ -32,21 +32,20 @@ export default function UserFormExample({
   const [isNumberValidated, setIsNumberValidated] = useState(false);
   const [isEmailValidated, setIsEmailValidated] = useState(false);
 
-  // const checkNumber = (e: any) => {
-  //   const inputValue = e.target.value;
-  //   const formattedValue = formatPhoneNumber(inputValue);
-  //   updateInputs({ phone_number: formattedValue });
-  // };
+  const checkNumber = (e: any) => {
+    const inputValue = e.target.value;
+    const formattedValue = formatPhoneNumber(inputValue);
+    updateInputs({ phone_number: formattedValue });
+  };
 
-  // const formatPhoneNumber = (inputValue: string) => {
-  //   const cleaned = inputValue.replace(/\D/g, "");
-  //   const match = cleaned.match(/^(\d{3})(\d{2})(\d{2})(\d{2})$/);
-  //   if (match) {
-  //     return `+995 ${match[1]} ${match[2]} ${match[3]} ${match[4]}`;
-  //   }
-  //   return inputValue;
-  // };
-  // THESE SHOULD BE ADDED LATER
+  const formatPhoneNumber = (inputValue: string) => {
+    const cleaned = inputValue.replace(/\D/g, "");
+    const match = cleaned.match(/^(\d{3})(\d{2})(\d{2})(\d{2})$/);
+    if (match) {
+      return `+995 ${match[1]} ${match[2]} ${match[3]} ${match[4]}`;
+    }
+    return inputValue;
+  };
 
 
   
@@ -214,6 +213,7 @@ export default function UserFormExample({
             name="phone_number"
             value={phone_number || ""}
             onBlur={() => setIsNumberValidated(true)}
+            onChange={(e) => checkNumber(e)}
             placeholder="+995 551 12 34 56"
             pattern="^\+\d{3}\s\d{3}\s\d{2}\s\d{2}\s\d{2}$"
             className={`w-798 h-12 border border-gray rounded py-13px px-4 leading-21px opacity-60 focus:outline-none ${
