@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import FormWrapper from "./FormWrapper";
 import { Educations } from "./Form";
 import Check from "./Svg/Check";
 import Warning from "./Svg/Warning";
+
 
 type userData = {
   educations: Educations[];
@@ -27,6 +28,7 @@ export default function EducationFormExample({
   const [descriptionInputBlurred, setDescriptionInputBlurred] = useState(false);
 
   const [allEducations, setAllEducations] = useState(educations);
+  const [degrees, setDegrees] = useState([]);
 
   const addEducations = () => {
     setAllEducations((prevAllEducations) => [
@@ -39,6 +41,10 @@ export default function EducationFormExample({
       },
     ]);
   };
+
+
+
+
 
   return (
     <div>

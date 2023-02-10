@@ -82,6 +82,11 @@ export default function Form() {
     });
   };
 
+  const resetData = () => {
+    sessionStorage.removeItem("data");
+    setData(USER_DATA);
+  };
+
   const { steps, currentStepIndex, step, back, next, isFirstStep, isLastStep } =
     useMultistepForm([
       <PersonalForm {...data} updateInputs={updateInputs} />,
@@ -108,8 +113,16 @@ export default function Form() {
         "
           >
             <Header
+              data={data}
+              onClick={resetData}
+              heading={
+                !isLastStep
+                  ? !isFirstStep
+                    ? "ᲞᲘᲠᲐᲓᲘ ᲘᲜᲤᲝ"
+                    : "ᲒᲐᲛᲝᲪᲓᲘᲚᲔᲑᲐ"
+                  : "ᲒᲐᲜᲐᲗᲚᲔᲑᲐ"
+              }
               page={currentStepIndex + 1}
-              heading="ᲞᲘᲠᲐᲓᲘ ᲘᲜᲤᲝ"
               prevPage="/"
               totalSteps={steps.length}
             />
