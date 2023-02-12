@@ -70,29 +70,6 @@ const USER_DATA: FormData = {
 export default function Form() {
   const [data, setData] = useState(USER_DATA);
 
-  function updateInputs(inputs: Partial<FormData>) {
-    setData((prevData) => {
-      return { ...prevData, ...inputs };
-    });
-  }
-
-  const updateExperiences = (Arr: Experiences[]) => {
-    setData((prevData) => {
-      return { ...prevData, experiences: Arr };
-    });
-  };
-
-  const updateEducations = (Arr: Educations[]) => {
-    setData((prevData) => {
-      return { ...prevData, educations: Arr };
-    });
-  };
-
-  const resetData = () => {
-    sessionStorage.removeItem("data");
-    setData(USER_DATA);
-  };
-
   const storedData = JSON.parse(sessionStorage.getItem("data")!);
 
   useEffect(() => {
@@ -140,7 +117,30 @@ export default function Form() {
     }
   }
 
-  const { steps, currentStepIndex, step, back, next, isFirstStep, isLastStep } =
+  function updateInputs(inputs: Partial<FormData>) {
+    setData((prevData) => {
+      return { ...prevData, ...inputs };
+    });
+  }
+
+  const resetData = () => {
+    sessionStorage.removeItem("data");
+    setData(USER_DATA);
+  };
+
+  const updateExperiences = (Arr: Experiences[]) => {
+    setData((prevData) => {
+      return { ...prevData, experiences: Arr };
+    });
+  };
+
+  const updateEducations = (Arr: Educations[]) => {
+    setData((prevData) => {
+      return { ...prevData, educations: Arr };
+    });
+  };
+
+  const { steps, currentStepIndex, step, isFirstStep, isLastStep, back, next } =
     useMultistepForm([
       <PersonalForm
         {...data}
@@ -162,7 +162,79 @@ export default function Form() {
     if (!isLastStep) {
       return next();
     }
-    navigate("/lastpage", { state: { data: data } });
+    postData();
+  }
+
+  function postData() {
+    function dataURLtoFile(dataurl: any, filename: any) {
+      if (data.image !== null) {
+        var arr = dataurl.split(","),
+          mime = arr[0].match(/:(.*?);/)[1],
+          bstr = atob(arr[1]),
+          n = bstr.length,
+          u8arr = new Uint8Array(n);
+
+        while (n--) {
+          u8arr[n] = bstr.charCodeAt(n);
+        }
+
+        return new File([u8arr], filename, { type: mime });
+      }
+    }
+
+    const file =
+      typeof data.image === "string"
+        ? dataURLtoFile(data.image, "image.jpg")
+        : data.image;
+
+    const formData = new FormData();
+    formData.append("name", data.name);
+    formData.append("surname", data.surname);
+    formData.append("email", data.email);
+    formData.append(
+      "phone_number",
+      data.phone_number?.replace(/\s/g, "") || ""
+    );
+
+    data.experiences.forEach((experience, index) => {
+      formData.append(`experiences[${index}][position]`, experience.position);
+      formData.append(`experiences[${index}][employer]`, experience.employer);
+      formData.append(
+        `experiences[${index}][start_date]`,
+        experience.start_date
+      );
+      formData.append(`experiences[${index}][due_date]`, experience.due_date);
+      formData.append(
+        `experiences[${index}][description]`,
+        experience.description
+      );
+    });
+
+    data.educations.forEach((education, index) => {
+      formData.append(`educations[${index}][institute]`, education.institute);
+      formData.append(
+        `educations[${index}][degree_id]`,
+        education.degree.toString()
+      );
+      formData.append(`educations[${index}][due_date]`, education.due_date);
+      formData.append(
+        `educations[${index}][description]`,
+        education.description
+      );
+    });
+
+    formData.append("image", file || "");
+    formData.append("about_me", data.about_me);
+    console.log({ ...formData });
+    axios
+      .post("https://resume.redberryinternship.ge/api/cvs", formData)
+      .then((res) => {
+        sessionStorage.removeItem("data");
+        setData(USER_DATA);
+        navigate("/lastpage", { state: { data: data, degrees: degrees } });
+        console.log(res);
+      })
+      .catch((err) => console.log(err));
   }
 
   return (
