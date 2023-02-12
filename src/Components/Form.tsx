@@ -8,6 +8,7 @@ import ExperienceForm from "./ExperienceForm";
 import EducationForm from "./EducationForm";
 import FormWrapper from "./FormWrapper";
 import Preview from "./Preview";
+import axios from "axios";
 
 export interface Experiences {
   position: string;
@@ -17,9 +18,14 @@ export interface Experiences {
   description: string;
 }
 
+export interface Degree {
+  id: number;
+  title: string;
+}
+
 export interface Educations {
   institute: string;
-  degree: string;
+  degree: number;
   due_date: string;
   description: string;
 }
@@ -52,7 +58,7 @@ const USER_DATA: FormData = {
   educations: [
     {
       institute: "",
-      degree: "",
+      degree: 0,
       due_date: "",
       description: "",
     },
@@ -95,6 +101,23 @@ export default function Form() {
     }
   }, []);
 
+  useEffect(() => {
+    sessionStorage.setItem("data", JSON.stringify(data));
+  }, [data]);
+
+  const [degrees, setDegrees] = useState<Degree[]>([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const result = await axios.get(
+        "https://resume.redberryinternship.ge/api/degrees"
+      );
+      setDegrees(result.data);
+      console.log("data from GET: ", degrees);
+    };
+    fetchData();
+  }, []);
+
   function readFile(
     e: React.ChangeEvent<HTMLInputElement>,
     callback: (result: string) => void
@@ -117,13 +140,19 @@ export default function Form() {
     }
   }
 
-
-
   const { steps, currentStepIndex, step, back, next, isFirstStep, isLastStep } =
     useMultistepForm([
-      <PersonalForm {...data} updateInputs={updateInputs} readFile={readFile} />,
+      <PersonalForm
+        {...data}
+        updateInputs={updateInputs}
+        readFile={readFile}
+      />,
       <ExperienceForm {...data} updateInputs={updateExperiences} />,
-      <EducationForm {...data} updateInputs={updateEducations} />,
+      <EducationForm
+        {...data}
+        updateInputs={updateEducations}
+        degrees={degrees}
+      />,
     ]);
 
   const navigate = useNavigate();

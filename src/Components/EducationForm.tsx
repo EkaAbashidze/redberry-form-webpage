@@ -3,7 +3,7 @@ import FormWrapper from "./FormWrapper";
 import { Educations } from "./Form";
 import Check from "./Svg/Check";
 import Warning from "./Svg/Warning";
-
+import { Degree } from "./Form";
 
 type userData = {
   educations: Educations[];
@@ -11,16 +11,18 @@ type userData = {
 
 type EducationProps = userData & {
   updateInputs: (inputs: Educations[]) => void;
+  degrees: Degree[];
 };
 
 export default function EducationFormExample({
   educations,
   updateInputs,
+  degrees,
 }: EducationProps) {
   const patternInstitute = /^[ა-ჰ]{2,}$/;
   const instituteIsValid = patternInstitute.test(educations[0].institute);
   const patternString = /^[ა-ჰA-Za-z]{2,}$/;
-  const educationsIsValid = patternString.test(educations[0].degree);
+  const educationsIsValid = patternString.test(educations[0].degree.toString());
   const descriptionIsValid = patternString.test(educations[0].description);
 
   const [isInstituteValidated, setIsInstituteValidated] = useState(false);
@@ -28,23 +30,18 @@ export default function EducationFormExample({
   const [descriptionInputBlurred, setDescriptionInputBlurred] = useState(false);
 
   const [allEducations, setAllEducations] = useState(educations);
-  const [degrees, setDegrees] = useState([]);
 
   const addEducations = () => {
     setAllEducations((prevAllEducations) => [
       ...prevAllEducations,
       {
         institute: "",
-        degree: "",
+        degree: 0,
         due_date: "",
         description: "",
       },
     ]);
   };
-
-
-
-
 
   return (
     <div>
@@ -114,7 +111,7 @@ export default function EducationFormExample({
                 value={allEducations[idx].degree}
                 onChange={(e) => {
                   const clone = allEducations.slice();
-                  clone[idx].degree = e.target.value;
+                  clone[idx].degree = +e.target.value;
                   setAllEducations(clone);
                   updateInputs(clone);
                 }}
@@ -133,17 +130,12 @@ export default function EducationFormExample({
                 <option disabled selected hidden value="">
                   აირჩიეთ ხარისხი
                 </option>
-                <option value="საშუალო სკოლა">საშუალო სკოლის დიპლომი</option>
-                <option value="ზოგადი განათლება">
-                  ზოგადსაგანმანათლებლო დიპლომი
-                </option>
-                <option value="ბაკალავრი">ბაკალავრი</option>
-                <option value="მაგისტრი">მაგისტრი</option>
-                <option value="დოქტორი">დოქტორი</option>
-                <option value="ასოცირებული ხარისხი">ასოცირებული ხარისხი</option>
-                <option value="სტუდენტი">სტუდენტი</option>
-                <option value="კოლეჯი">კოლეჯი (ხარისხის გარეშე)</option>
-                <option value="სხვა">სხვა</option>
+
+                {degrees.map((degree, index) => (
+                  <option key={index} value={degree.id}>
+                    {degree.title}
+                  </option>
+                ))}
               </select>
             </div>
             <div className="flex flex-col gap-y-2">
