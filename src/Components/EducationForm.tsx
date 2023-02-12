@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
-import FormWrapper from "./FormWrapper";
+import React, { useState } from "react";
 import { Educations } from "./Form";
 import Check from "./Svg/Check";
 import Warning from "./Svg/Warning";
 import { Degree } from "./Form";
+
 
 type userData = {
   educations: Educations[];
@@ -47,19 +47,24 @@ export default function EducationFormExample({
     <div>
       {allEducations.map((educations, idx) => (
         <>
-          {" "}
           <div className="flex flex-col">
             <div className="flex flex-col gap-y-2">
               <label
                 htmlFor="institute"
-                className="font-medium text-base leading-[21px]"
+                className={`font-medium text-base leading-[21px] text-offblack ${
+                  isInstituteValidated && allEducations[idx].institute
+                    ? instituteIsValid
+                      ? ""
+                      : "text-lightred"
+                    : ""
+                }`}
               >
                 სასწავლებელი
               </label>
 
               <div className="flex items-center">
                 <input
-                  required
+                  required={idx === 0}
                   type="text"
                   name="institute"
                   value={allEducations[idx].institute}
@@ -106,7 +111,7 @@ export default function EducationFormExample({
               </label>
 
               <select
-                required
+                required={idx === 0}
                 name="degree"
                 value={allEducations[idx].degree}
                 onChange={(e) => {
@@ -147,7 +152,7 @@ export default function EducationFormExample({
               </label>
 
               <input
-                required
+                required={idx === 0}
                 type="date"
                 name="due_date"
                 value={allEducations[idx].due_date.toString().substr(0, 10)}
@@ -181,7 +186,7 @@ export default function EducationFormExample({
                   ? "border-green"
                   : descriptionInputBlurred &&
                     allEducations[idx].description &&
-                    "border-lightred"
+                    ""
               }
               `}
             ></textarea>

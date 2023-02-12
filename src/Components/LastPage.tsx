@@ -3,12 +3,9 @@ import { Link, useLocation } from "react-router-dom";
 import Preview from "./Preview";
 import Arrow from "./Svg/Arrow";
 import CloseIcon from "./Svg/CloseIcon";
-import { Experiences } from "./Form";
-import { Educations } from "./Form";
 
 export default function LastPage() {
   const location = useLocation();
-  console.log(location.state.data);
   const [popUpPreview, setPopUpPreview] = useState(true);
 
   return (

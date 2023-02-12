@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import FormWrapper from "./FormWrapper";
 import { Experiences } from "./Form";
 import Check from "./Svg/Check";
 import Warning from "./Svg/Warning";
@@ -38,7 +37,6 @@ export default function ExperienceFormExample({
         description: "",
       },
     ]);
-    console.log("Hello");
   };
 
   return (
@@ -49,14 +47,20 @@ export default function ExperienceFormExample({
             <div className="flex flex-col gap-y-2">
               <label
                 htmlFor="position"
-                className="font-medium text-base leading-[21px]"
+                className={`font-medium text-base leading-[21px] text-offblack ${
+                  isPositionValidated && experiences.position
+                    ? positionIsValid
+                      ? ""
+                      : "text-lightred"
+                    : ""
+                }`}
               >
                 თანამდებობა
               </label>
 
               <div className="flex items-center">
                 <input
-                  required
+                  required={idx === 0}
                   type="text"
                   name="position"
                   value={allExperiences[idx].position}
@@ -96,14 +100,20 @@ export default function ExperienceFormExample({
             <div className="flex flex-col gap-y-2 pt-[29px]">
               <label
                 htmlFor="employer"
-                className="font-medium text-base leading-[21px]"
+                className={`font-medium text-base leading-[21px] text-offblack ${
+                  isEmployerValidated && allExperiences[idx].employer
+                    ? employerIsValid
+                      ? ""
+                      : "text-lightred"
+                    : ""
+                }`}
               >
                 დამსაქმებელი
               </label>
 
               <div className="flex items-center">
                 <input
-                  required
+                  required={idx === 0}
                   type="text"
                   name="employer"
                   value={allExperiences[idx].employer}
@@ -151,7 +161,7 @@ export default function ExperienceFormExample({
                 დაწყების რიცხვი
               </label>
               <input
-                required
+                required={idx === 0}
                 type="date"
                 name="start_date"
                 onChange={(e) => {
@@ -161,7 +171,7 @@ export default function ExperienceFormExample({
                   updateInputs(clone);
                 }}
                 value={allExperiences[idx].start_date.toString().substr(0, 10)}
-                className="w-[371px] h-12 border border-gray rounded py-[13px] px-4 leading-[21px] opacity-60 focus:outline-none"
+                className="w-[371px] h-12 border border-gray rounded py-[13px] px-4 leading-[21px] opacity-60 focus:outline-none "
               />
             </div>
             <div className="flex flex-col gap-y-2">
@@ -172,7 +182,7 @@ export default function ExperienceFormExample({
                 დამთავრების რიცხვი
               </label>
               <input
-                required
+                required={idx === 0}
                 type="date"
                 name="due_date"
                 onChange={(e) => {
@@ -190,7 +200,7 @@ export default function ExperienceFormExample({
           <div className="pt-[33px] flex flex-col gap-y-2">
             <label htmlFor="description">აღწერა</label>
             <textarea
-              required
+              required={idx === 0}
               name="description"
               value={allExperiences[idx].description}
               onChange={(e) => {
@@ -208,7 +218,7 @@ export default function ExperienceFormExample({
                   ? "border-green"
                   : descriptionInputBlurred &&
                     allExperiences[idx].description &&
-                    "border-lightred"
+                    ""
               }`}
             ></textarea>
           </div>
@@ -218,8 +228,8 @@ export default function ExperienceFormExample({
       ))}
       <button
         type="button"
-        onClick={() => addExperience()}
         className="cursor-pointer bg-lightgrayblue text-white w-289 h-48 rounded flex justify-center items-center text-base leading-[20px]"
+        onClick={() => addExperience()}
       >
         მეტი გამოცდილების დამატება
       </button>

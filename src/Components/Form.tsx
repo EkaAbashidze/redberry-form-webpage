@@ -90,7 +90,6 @@ export default function Form() {
         "https://resume.redberryinternship.ge/api/degrees"
       );
       setDegrees(result.data);
-      console.log("data from GET: ", degrees);
     };
     fetchData();
   }, []);
@@ -225,14 +224,12 @@ export default function Form() {
 
     formData.append("image", file || "");
     formData.append("about_me", data.about_me);
-    console.log({ ...formData });
     axios
       .post("https://resume.redberryinternship.ge/api/cvs", formData)
       .then((res) => {
         sessionStorage.removeItem("data");
         setData(USER_DATA);
         navigate("/lastpage", { state: { data: data, degrees: degrees } });
-        console.log(res);
       })
       .catch((err) => console.log(err));
   }

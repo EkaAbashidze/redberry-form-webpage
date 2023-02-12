@@ -16,11 +16,10 @@ export default function UserFormExample({
   name,
   surname,
   about_me,
-  image,
   email,
   phone_number,
   updateInputs,
-  readFile
+  readFile,
 }: userFormProps) {
   const patternName = /^[ა-ჰ]{2,}$/;
   const nameIsValid = patternName.test(name);
@@ -52,17 +51,15 @@ export default function UserFormExample({
     return inputValue;
   };
 
-
-  
-
-
   return (
     <div>
       <div className="flex gap-x-14">
         <div className="flex flex-col gap-y-2">
           <label
             htmlFor="name"
-            className="font-medium text-base leading-[21px]"
+            className={`font-medium text-base leading-[21px] text-offblack ${
+              inputBlurred && name ? (nameIsValid ? "" : "text-lightred") : ""
+            }`}
           >
             სახელი
           </label>
@@ -97,7 +94,13 @@ export default function UserFormExample({
         <div className="flex flex-col gap-y-2">
           <label
             htmlFor="surname"
-            className="font-medium text-base leading-[21px]"
+            className={`font-medium text-base leading-[21px] text-offblack ${
+              surnameInputBlurred && surname
+                ? surnameIsValid
+                  ? ""
+                  : "text-lightred"
+                : ""
+            }`}
           >
             გვარი
           </label>
@@ -142,7 +145,7 @@ export default function UserFormExample({
             onChange={(e) => {
               updateInputs({ image: e.target?.files?.[0] || null });
               readFile(e, (result) => {
-                console.log(result)
+                // console.log(result);
               });
             }}
             className="h-[27px] focus:outline-none"
@@ -167,7 +170,16 @@ export default function UserFormExample({
       </div>
 
       <div className="flex flex-col gap-y-2 pt-[33px]">
-        <label htmlFor="email" className="font-medium text-base leading-[21px]">
+        <label
+          htmlFor="email"
+          className={`font-medium text-base leading-[21px] text-offblack ${
+            isEmailValidated && email
+              ? emailIsValid
+                ? ""
+                : "text-lightred"
+              : ""
+          }`}
+        >
           ელ.ფოსტა
         </label>
 
@@ -208,7 +220,13 @@ export default function UserFormExample({
       <div className="flex flex-col gap-y-2 pt-[29px]">
         <label
           htmlFor="phone_number"
-          className="font-medium text-base leading-[21px]"
+          className={`font-medium text-base leading-[21px] text-offblack ${
+            isNumberValidated && phone_number
+              ? numberIsValid
+                ? "text-offblack"
+                : "text-lightred"
+              : ""
+          }`}
         >
           მობილურის ნომერი
         </label>

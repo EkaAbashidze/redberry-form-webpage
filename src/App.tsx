@@ -1,12 +1,8 @@
 import React from "react";
-import {
-  BrowserRouter as Router,
-  Navigate,
-  Route,
-  Routes,
-} from "react-router-dom";
-import Form from "./Components/Form";
 import Home from "./Components/Home";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import Form from "./Components/Form";
+import LastPage from "./Components/LastPage";
 
 function App() {
   return (
@@ -15,6 +11,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/form" element={<Form />} />
+          <Route path="/lastpage" element={<LastPage />} />
         </Routes>
       </div>
     </Router>
