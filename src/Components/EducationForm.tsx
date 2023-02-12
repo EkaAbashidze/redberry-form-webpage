@@ -19,9 +19,9 @@ export default function EducationFormExample({
   updateInputs,
   degrees,
 }: EducationProps) {
-  const patternInstitute = /^[ა-ჰ]{2,}$/;
+  const patternInstitute = /^[ა-ჰ\s]{2,}$/;
   const instituteIsValid = patternInstitute.test(educations[0].institute);
-  const patternString = /^[ა-ჰA-Za-z]{2,}$/;
+  const patternString = /^[ა-ჰA-Za-z\s]{2,}$/;
   const educationsIsValid = patternString.test(educations[0].degree.toString());
   const descriptionIsValid = patternString.test(educations[0].description);
 

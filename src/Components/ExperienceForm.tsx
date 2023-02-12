@@ -15,7 +15,7 @@ export default function ExperienceFormExample({
   experiences,
   updateInputs,
 }: ExperienceFormProps) {
-  const patternString = /^[ა-ჰA-Za-z]{2,}$/;
+  const patternString = /^[ა-ჰA-Za-z\s]{2,}$/;
   const positionIsValid = patternString.test(experiences[0].position);
   const employerIsValid = patternString.test(experiences[0].employer);
   const descriptionIsValid = patternString.test(experiences[0].description);
@@ -71,7 +71,7 @@ export default function ExperienceFormExample({
                     updateInputs(clone);
                   }}
                   onBlur={() => setIsPositionValidated(true)}
-                  pattern="^[ა-ჰA-Za-z]{2,}$"
+                  pattern="^[ა-ჰA-Za-z\s]{2,}$"
                   placeholder="დეველოპერი, დიზაინერი, ა.შ."
                   className={`w-798 h-12 border border-gray rounded py-[13px] px-4 leading-[21px] opacity-60 focus:outline-none ${
                     isPositionValidated &&
@@ -124,7 +124,7 @@ export default function ExperienceFormExample({
                     updateInputs(clone);
                   }}
                   onBlur={() => setIsEmployerValidated(true)}
-                  pattern="^[ა-ჰA-Za-z]{2,}$"
+                  pattern="^[ა-ჰA-Za-z\s]{2,}$"
                   placeholder="დამსაქმებელი"
                   className={`w-798 h-12 border border-gray rounded py-[13px] px-4 leading-[21px] opacity-60 focus:outline-none ${
                     isEmployerValidated &&
