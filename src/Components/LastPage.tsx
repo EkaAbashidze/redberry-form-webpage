@@ -6,12 +6,10 @@ import CloseIcon from "./Svg/CloseIcon";
 import { Experiences } from "./Form";
 import { Educations } from "./Form";
 
-
-  export default function LastPage() {
-    
-    const location = useLocation();
-    console.log(location.state.data);
-    const [popUpPreview, setPopUpPreview] = useState(true)
+export default function LastPage() {
+  const location = useLocation();
+  console.log(location.state.data);
+  const [popUpPreview, setPopUpPreview] = useState(true);
 
   return (
     <div className="h-[1263px] pt-14 pl-12 pr-16">
@@ -25,19 +23,25 @@ import { Educations } from "./Form";
 
         <div className="flex gap-x-14">
           <div className="w-[822px] h-[1080px] border-[0.8px] border-black ">
-            <Preview data={location.state.data}/>
+            <Preview
+              data={location.state.data}
+              degrees={location.state.degrees}
+            />
           </div>
 
           <div
-            className={`w-[427px] h-[167px] flex pt-4 pl-7 rounded border border-[#E4E4E4] shadow-shadow font-medium text-3xl ${!popUpPreview ? 'invisible' : 'visible'}`}
+            className={`w-[427px] h-[167px] flex pt-4 pl-7 rounded border border-[#E4E4E4] shadow-shadow font-medium text-3xl ${
+              !popUpPreview ? "invisible" : "visible"
+            }`}
           >
             <h3 className="pt-6">რეზიუმე წარმატებით გაიგზავნა 🎉</h3>
-              <div onClick={() => setPopUpPreview(false)} className="flex self-start pr-3">
-                <CloseIcon />
-              </div>
+            <div
+              onClick={() => setPopUpPreview(false)}
+              className="flex self-start pr-3"
+            >
+              <CloseIcon />
+            </div>
           </div>
-
-
         </div>
       </div>
     </div>

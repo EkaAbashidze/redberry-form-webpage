@@ -272,7 +272,7 @@ export default function Form() {
           </div>
         </FormWrapper>
       </form>
-      <Preview data={data} />
+      <Preview data={data} degrees={degrees}/>
     </div>
   );
 }
