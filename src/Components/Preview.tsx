@@ -121,7 +121,7 @@ export default function Preview({
                 <h3 className="text-red font-bold text-[18px]">ᲒᲐᲜᲐᲗᲚᲔᲑᲐ</h3>
                 <div className="flex items-center gap-x-2 font-medium text-base leading-[20px] text-offblack pb-2 pt-4">
                   <p>
-                    <b>{education.institute}</b>
+                    <b>{education.institute},</b>
                   </p>
                   <p>
                     <b>{degree?.title}</b>
