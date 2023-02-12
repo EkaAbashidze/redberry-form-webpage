@@ -32,11 +32,11 @@ export default function Preview({
       : data.image;
 
   return (
-    <div className="pt-12 px-20 pb-11 flex flex-col justify-between h-[1080px] w-full overflow-y-hidden">
+    <div className="pt-12 px-20 pb-11 flex flex-col justify-between h-[1080px] w-full">
       <div>
         <div className="flex justify-between ">
           <div className="mt-10">
-            <div className="flex items-center gap-x-5 text-red font-bold text-4xl leading-10 mb-4 ">
+            <div className="flex items-center gap-x-5 text-red font-bold text-4xl leading-10 mb-4">
               <h1>{data.name}</h1>
               <h1>{data.surname}</h1>
             </div>
